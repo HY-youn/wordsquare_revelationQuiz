@@ -1,51 +1,38 @@
 import React from 'react';
 
-const BibleSelector = ({ book, chapter, verse, onSelect }) => {
-  // 성경 책 목록
-  const books = [
-    { label: '계시록', value: 'revelation' } 
-  ];
+const BibleSelector = ({ chapter, verse, onSelect }) => {
 
-  const handleChange = (type, value) => {
-    onSelect(type, value);
+
+  const versesPerChapter = {
+    1: 20, 2: 29, 3: 22, 4: 11, 5: 14, 6: 17, 7: 17, 8: 13, 9: 21,
+    10: 11, 11: 19, 12: 17, 13: 18, 14: 20, 15: 8, 16: 21, 17: 18,
+    18: 24, 19: 21, 20: 15, 21: 27, 22: 21
   };
 
   return (
     <div className="bible-selector">
-      <select
-        value={book}
-        onChange={(e) => handleChange('book', e.target.value)}
-        className="selector"
-      >
-        {books.map((item) => (
-          <option key={item.value} value={item.value}>
-            {item.label}
-          </option>
-        ))}
-      </select>
+    <select
+      value={chapter}
+      onChange={(e) => onSelect('chapter', e.target.value)}
+      className="selector"
+    >
+      {[...Array(22)].map((_, i) => (
+        <option key={i + 1} value={i + 1}>
+          {i + 1}장
+        </option>
+      ))}
+    </select>
 
-      <select
-        value={chapter}
-        onChange={(e) => handleChange('chapter', parseInt(e.target.value))}
-        className="selector"
-      >
-        {[...Array(50)].map((_, i) => (
-          <option key={i + 1} value={i + 1}>
-            {i + 1}장
-          </option>
-        ))}
-      </select>
-
-      <select
-        value={verse}
-        onChange={(e) => handleChange('verse', parseInt(e.target.value))}
-        className="selector"
-      >
-        {[...Array(30)].map((_, i) => (
-          <option key={i + 1} value={i + 1}>
-            {i + 1}절
-          </option>
-        ))}
+    <select
+      value={verse}
+      onChange={(e) => onSelect('verse', e.target.value)}
+      className="selector"
+    >
+      {[...Array(versesPerChapter[chapter])].map((_, i) => (
+        <option key={i + 1} value={i + 1}>
+          {i + 1}절
+        </option>
+      ))}
       </select>
 
       <style jsx>{`

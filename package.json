@@ -1,7 +1,7 @@
 {
   "name": "bible-typing",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://hd-youn.github.io/wordsquare_revelationQuiz",
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.x.x",
     "@react-native-picker/picker": "^2.x.x",
@@ -14,7 +14,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
