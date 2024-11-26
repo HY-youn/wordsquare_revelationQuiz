@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import BibleSelector from './components/BibleSelector';
+import MainMenu from './components/MainMenu';
 
 // 계시록 데이터
 const BIBLE_VERSES = {
@@ -459,6 +460,7 @@ function BibleQuiz({ verse }) {
   const [answers, setAnswers] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]);
   const [results, setResults] = useState(null);
+  const [blankRatio, setBlankRatio] = useState(0.5); // 빈칸 비율 상태 추가
 
   useEffect(() => {
     createQuiz(verse.text);
@@ -466,7 +468,7 @@ function BibleQuiz({ verse }) {
 
   const createQuiz = (text) => {
     const words = text.split(' ');
-    const numBlanks = Math.floor(words.length * 0.5);
+    const numBlanks = Math.floor(words.length * blankRatio);
     const blankIndices = new Set();
     
     while (blankIndices.size < numBlanks) {
@@ -498,6 +500,15 @@ function BibleQuiz({ verse }) {
     newAnswers[index] = value;
     setUserAnswers(newAnswers);
   };
+//  userAnswer 배열에 있는 값에 인덱스를 부여해서 값을 설정함, 그것을 state 에 저장함
+
+const handleRatioChange = (e) => {
+  const newRatio = parseFloat(e.target.value);
+  if (newRatio >= 0.1 && newRatio <= 0.9) { // 10%~90% 범위로 제한
+    setBlankRatio(newRatio);
+    createQuiz(verse.text); // 새로운 비율로 퀴즈 생성
+  }
+};
 
   const checkAnswers = () => {
     const newResults = userAnswers.map((answer, index) => ({
@@ -511,7 +522,21 @@ function BibleQuiz({ verse }) {
   return (
     <div className="bible-quiz">
       <h3>빈칸 채우기 퀴즈</h3>
+      <div className="ratio-control">
+        <label>빈칸 비율 설정 ({Math.round(blankRatio * 100)}%):</label>
+        <p>빈칸 비율을 알맞게 설정해보세요(10~90%)생성</p>
+        <input
+          type="range"
+          min="0.1"
+          max="0.9"
+          step="0.1"
+          value={blankRatio}
+          onChange={handleRatioChange}
+        />
+      </div>
+
       <p className="quiz-text">{quizText}</p>
+      
       
       <div className="answers-container">
         {answers.map((answer, index) => (
@@ -566,6 +591,28 @@ function BibleQuiz({ verse }) {
           word-break: keep-all;
         }
 
+        
+        .ratio-control {
+          margin: 20px 0;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .ratio-control p {
+          font-size: 12px;
+          color : #f00;
+        }
+
+        .ratio-control label {
+          font-weight: bold;
+        }
+
+        .ratio-control input[type="range"] {
+          flex: 1;
+          width : 300px;
+          max-width: 600px;
+        }
         .answers-container {
           display: flex;
           flex-direction: column;
@@ -639,6 +686,9 @@ function BibleQuiz({ verse }) {
 
 export default function App() {
   // state 선언을 먼저 합니다
+  const [selectedLevel, setSelectedLevel] = useState(null);
+
+  
   const [currentVerse, setCurrentVerse] = useState({
     text: BIBLE_VERSES.revelation[1][1],
     book: '계시록',
@@ -656,13 +706,44 @@ export default function App() {
   const startTimeRef = useRef(null);
   const errorsRef = useRef(0);
 
+  const handleLevelSelect = (level) => {
+    setSelectedLevel(level);
+    // 레벨에 따라 사용 가능한 장 설정
+    let maxChapter;
+    switch (level) {
+      case 1:
+        maxChapter = 7;
+        break;
+      case 2:
+        maxChapter = 14;
+        break;
+      case 3:
+        maxChapter = 22;
+        break;
+      default:
+        maxChapter = 22;
+    }
+    setCurrentVerse({
+      text: BIBLE_VERSES.revelation[1][1],
+      book: '계시록',
+      chapter: 1,
+      verse: 1
+    });
+  };
+
   const handleVerseSelection = (type, value) => {
     let newChapter = currentVerse.chapter;
     let newVerse = currentVerse.verse;
+    
+    // 선택된 레벨에 따른 최대 장 수 설정
+    const maxChapter = selectedLevel === 1 ? 7 : selectedLevel === 2 ? 14 : 22;
 
     if (type === 'chapter') {
-      newChapter = parseInt(value);
-      newVerse = 1;
+      // 선택된 장이 최대 장 수를 넘지 않도록 제한
+      if (value <= maxChapter) {
+        newChapter = parseInt(value);
+        newVerse = 1;
+      }
     } else if (type === 'verse') {
       newVerse = parseInt(value);
     }
@@ -676,6 +757,7 @@ export default function App() {
         chapter: newChapter,
         verse: newVerse
       });
+      
       
       setUserInput('');
       setIsCorrect(true);
@@ -732,16 +814,27 @@ export default function App() {
       }
     }
   };
+  if (!selectedLevel) {
+    return <MainMenu onLevelSelect={handleLevelSelect} />;
+  }
 
   return (
     <div className="container">
       <h1>계시록 타자 연습</h1>
+      <h2>현재 단계는 <span>레벨 {selectedLevel}</span> 입니다.</h2>
+      <button 
+        className="back-button" 
+        onClick={() => setSelectedLevel(null)}
+      >
+        메인 메뉴로 돌아가기
+      </button>
       <div className="content">
         <BibleSelector
           book="revelation"
           chapter={currentVerse.chapter}
           verse={currentVerse.verse}
           onSelect={handleVerseSelection}
+          selectedLevel={selectedLevel}
         />
         
         <div className="reference">
@@ -767,13 +860,41 @@ export default function App() {
       </div>
 
       <style jsx>{`
+       .back-button {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          padding: 10px 20px;
+          
+          color: white;
+          border: none;
+          border-radius: 25px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .back-button:hover{
+        color : white;
+        background-color: #ffffff;
+        }
+        
+        .back-button:hover {
+          background-color: #5a6268;
+        }
         .container {
           max-width: 800px;
           margin: 0 auto;
           padding: 20px;
           font-family: 'Noto Sans KR', sans-serif;
         }
-        
+        .container h2{
+          text-align: center;
+          color: #aaaaaa;
+          margin-bottom: 30px;
+        }
+        .container h2 span{
+          color: #333;
+          font-weight: bold;
+        }
         h1 {
           text-align: center;
           color: #333;

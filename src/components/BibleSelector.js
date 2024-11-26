@@ -1,8 +1,16 @@
 import React from 'react';
 
-const BibleSelector = ({ chapter, verse, onSelect }) => {
+const BibleSelector = ({ chapter, verse, onSelect, selectedLevel }) => {
 
-
+  const getMaxChapters = (level) => {
+    switch (level) {
+      case 1: return 7;
+      case 2: return 14;
+      case 3: return 22;
+      default: return 22;
+    }
+  };
+  const maxChapters = getMaxChapters(selectedLevel);
   const versesPerChapter = {
     1: 20, 2: 29, 3: 22, 4: 11, 5: 14, 6: 17, 7: 17, 8: 13, 9: 21,
     10: 11, 11: 19, 12: 17, 13: 18, 14: 20, 15: 8, 16: 21, 17: 18,
@@ -16,7 +24,7 @@ const BibleSelector = ({ chapter, verse, onSelect }) => {
       onChange={(e) => onSelect('chapter', e.target.value)}
       className="selector"
     >
-      {[...Array(22)].map((_, i) => (
+      {[...Array(maxChapters)].map((_, i) => (
         <option key={i + 1} value={i + 1}>
           {i + 1}장
         </option>
