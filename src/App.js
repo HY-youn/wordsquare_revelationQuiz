@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import BibleSelector from './components/BibleSelector';
-import MainMenu from './components/MainMenu';
+import React, { useState, useEffect, useRef } from "react";
+import BibleSelector from "./components/BibleSelector";
+import MainMenu from "./components/MainMenu";
 
 // 계시록 데이터
 const BIBLE_VERSES = {
-  'revelation': {
+  revelation: {
     1: {
-      1: "예수 그리스도의 계시라 이는 하나님이 그에게 주사 반드시 속히 될 일을 그 종들에게 보이시려고 그의 천사를 그 종 요한에게 보내어 알게 하신 것이라",
+      1: "예수 그리스도의 계시라 이는 하나님이 그에게 주사 반드시 속히 될 일을 그 종들에게 보이시려고 그 천사를 그 종 요한에게 보내어 지시하신 것이라",
       2: "요한은 하나님의 말씀과 예수 그리스도의 증거 곧 자기의 본 것을 다 증거하였느니라",
-      3: "이 예언의 말씀을 읽는 자와 듣는 자와 그 가운데 기록한 것을 지키는 자가 복이 있나니 때가 가까움이라",
+      3: "이 예언의 말씀을 읽는 자와 듣는 자들과 그 가운데 기록한 것을 지키는 자가 복이 있나니 때가 가까움이라",
       4: "요한은 아시아에 있는 일곱 교회에 편지하노니 이제도 계시고 전에도 계시고 장차 오실 이와 그 보좌 앞에 일곱 영과",
       5: "또 충성된 증인으로 죽은 자들 가운데서 먼저 나시고 땅의 임금들의 머리가 되신 예수 그리스도로 말미암아 은혜와 평강이 너희에게 있기를 원하노라 우리를 사랑하사 그의 피로 우리 죄에서 우리를 해방하시고",
       6: "그의 아버지 하나님을 위하여 우리를 나라와 제사장으로 삼으신 그에게 영광과 능력이 세세토록 있기를 원하노라 아멘",
@@ -25,7 +25,7 @@ const BIBLE_VERSES = {
       17: "내가 볼 때에 그 발 앞에 엎드러져 죽은 자같이 되매 그가 오른손을 내게 얹고 가라사대 두려워 말라 나는 처음이요 나중이니",
       18: "곧 산 자라 내가 전에 죽었었노라 볼지어다 이제 세세토록 살아있어 사망과 음부의 열쇠를 가졌노니",
       19: "그러므로 네 본 것과 이제 있는 일과 장차 될 일을 기록하라",
-      20: "네 본 것은 내 오른손에 일곱 별의 비밀과 일곱 금촛대라 일곱 별은 일곱 교회의 사자요 일곱 촛대는 일곱 교회니라"
+      20: "네 본 것은 내 오른손에 일곱 별의 비밀과 일곱 금 촛대라 일곱 별은 일곱 교회의 사자요 일곱 촛대는 일곱 교회니라",
     },
     2: {
       1: "에베소 교회의 사자에게 편지하기를 오른손에 일곱 별을 붙잡고 일곱 금촛대 사이에 다니시는 이가 가라사대",
@@ -52,11 +52,11 @@ const BIBLE_VERSES = {
       22: "볼지어다 내가 그를 침상에 던질 터이요 또 그로 더불어 간음하는 자들도 만일 그의 행위를 회개치 아니하면 큰 환난 가운데 던지고",
       23: "또 내가 사망으로 그의 자녀를 죽이리니 모든 교회가 나는 사람의 뜻과 마음을 살피는 자인 줄 알지라 내가 너희 각 사람의 행위대로 갚아주리라",
       24: "두아디라에 남아 있어 이 교훈을 받지 아니하고 소위 사단의 깊은 것을 알지 못하는 너희에게 말하노니 다른 짐으로 너희에게 지울 것이 없노라",
-      25: "다만 너희에게 있는 것을 내가 올 때까지 굳게 ��으라",
+      25: "다만 너희에게 있는 것을 내가 올 때까지 굳게 잡으라",
       26: "이기는 자와 끝까지 내 일을 지키는 그에게 만국을 다스리는 권세를 주리니",
       27: "그가 철장을 가지고 저희를 다스려 질그릇 깨뜨리는 것과 같이 하리라 나도 내 아버지께 받은 것이 그러하니라",
       28: "내가 또 그에게 새벽 별을 주리라",
-      29: "귀 있는 자는 성령이 교회들에게 하시는 말씀을 들을지어다"
+      29: "귀 있는 자는 성령이 교회들에게 하시는 말씀을 들을지어다",
     },
     3: {
       1: "사데 교회의 사자에게 편지하기를 하나님의 일곱 영과 일곱 별을 가진 이가 가라사대 내가 네 행위를 아노니 네가 살았다 하는 이름은 가졌으나 죽은 자로다",
@@ -80,7 +80,7 @@ const BIBLE_VERSES = {
       19: "무릇 내가 사랑하는 자를 책망하여 징계하노니 그러므로 네가 열심을 내라 회개하라",
       20: "볼지어다 내가 문 밖에 서서 두드리노니 누구든지 내 음성을 듣고 문을 열면 내가 그에게로 들어가 그로 더불어 먹고 그는 나로 더불어 먹으리라",
       21: "이기는 그에게는 내가 내 보좌에 함께 앉게 하여 주기를 내가 이기고 아버지 보좌에 함께 앉은 것과 같이 하리라",
-      22: "귀 있는 자는 성령이 교회들에게 하시는 말씀을 들을지어다"
+      22: "귀 있는 자는 성령이 교회들에게 하시는 말씀을 들을지어다",
     },
     4: {
       1: "이 일 후에 내가 보니 하늘에 열린 문이 있는데 내가 들은 바 처음에 내게 말하던 나팔 소리 같은 그 음성이 가로되 이리로 올라오라 이 후에 마땅히 될 일을 내가 네게 보이리라 하시더라",
@@ -93,7 +93,7 @@ const BIBLE_VERSES = {
       8: "네 생물이 각각 여섯 날개가 있고 그 안과 주위에 눈이 가득하더라 그들이 밤낮 쉬지 않고 이르기를 거룩하다 거룩하다 거룩하다 주 하나님 곧 전능하신 이여 전에도 계셨고 이제도 계시고 장차 오실 자라 하고",
       9: "그 생물들이 영광과 존귀와 감사를 보좌에 앉으사 세세토록 사시는 이에게 돌릴 때에",
       10: "이십사 장로들이 보좌에 앉으신 이 앞에 엎드려 세세토록 사시는 이에게 경배하고 자기의 면류관을 보좌 앞에 던지며 가로되",
-      11: "우리 주 하나님이여 영광과 존귀와 능력을 받으시는 것이 합당하오니 주께서 만물을 지으신지라 만물이 주의 뜻대로 있었고 또 지으심을 받았나이다 하더라"
+      11: "우리 주 하나님이여 영광과 존귀와 능력을 받으시는 것이 합당하오니 주께서 만물을 지으신지라 만물이 주의 뜻대로 있었고 또 지으심을 받았나이다 하더라",
     },
     5: {
       1: "내가 보매 보좌에 앉으신 이의 오른손에 책이 있으니 안팎으로 썼고 일곱 인으로 봉하였더라",
@@ -105,11 +105,11 @@ const BIBLE_VERSES = {
       7: "어린 양이 나아와서 보좌에 앉으신 이의 오른손에서 책을 취하시니라",
       8: "책을 취하시매 네 생물과 이십사 장로들이 어린 양 앞에 엎드려 각각 거문고와 향이 가득한 금대접을 가졌으니 이 향은 성도의 기도들이라",
       9: "새 노래를 노래하여 가로되 책을 가지시고 그 인봉을 떼기에 합당하시도다 일찍 죽임을 당하사 각 족속과 방언과 백성과 나라 가운데서 사람들을 피로 사서 하나님께 드리시고",
-      10: "저희로 우리 하나님 앞에��� 나라와 제��장을 삼으셨으니 저희가 땅에서 왕 노릇 하리로다 하더라",
+      10: "저희로 우리 하나님 앞에서 나라와 제사장을 삼으셨으니 저희가 땅에서 왕노릇 하리로다 하더라",
       11: "내가 또 보고 들으매 보좌와 생물들과 장로들을 둘러선 많은 천사의 음성이 있으니 그 수가 만만이요 천천이라",
       12: "큰 음성으로 가로되 죽임을 당하신 어린 양이 능력과 부와 지혜와 힘과 존귀와 영광과 찬송을 받으시기에 합당하도다 하더라",
       13: "내가 또 들으니 하늘 위에와 땅 위에와 땅 아래와 바다 위에와 또 그 가운데 모든 만물이 가로되 보좌에 앉으신 이와 어린 양에게 찬송과 존귀와 영광과 능력을 세세토록 돌릴지어다 하니",
-      14: "네 생물이 가로되 아멘 하고 장로들은 엎드려 경배하더라"
+      14: "네 생물이 가로되 아멘 하고 장로들은 엎드려 경배하더라",
     },
     6: {
       1: "내가 보매 어린 양이 일곱 인 중에 하나를 떼시는 그 때에 내가 들으니 네 생물 중에 하나가 우뢰 소리같이 말하되 오라 하기로",
@@ -128,7 +128,7 @@ const BIBLE_VERSES = {
       14: "하늘은 종이 축이 말리는 것같이 떠나가고 각 산과 섬이 제 자리에서 옮기우매",
       15: "땅의 임금들과 왕족들과 장군들과 부자들과 강한 자들과 각 종과 자주자가 굴과 산 바위 틈에 숨어",
       16: "산과 바위에게 이르되 우리 위에 떨어져 보좌에 앉으신 이의 낯에서와 어린 양의 진노에서 우리를 가리우라",
-      17: "그들의 진노의 큰 날이 이르렀으니 누가 능히 서리요 하더라"
+      17: "그들의 진노의 큰 날이 이르렀으니 누가 능히 서리요 하더라",
     },
     7: {
       1: "이 일 후에 내가 보니 네 천사가 땅 네 모퉁이에 선 것을 보니 땅의 사방의 바람을 붙잡아 바람으로 하여금 땅에나 바다에나 각종 나무에 불지 못하게 하더라",
@@ -147,7 +147,7 @@ const BIBLE_VERSES = {
       14: "내가 가로되 내 주여 당신이 알리이다 하니 그가 나더러 이르되 이는 큰 환난에서 나오는 자들인데 어린 양의 피에 그 옷을 씻어 희게 하였느니라",
       15: "그러므로 그들이 하나님의 보좌 앞에 있고 또 그의 성전에서 밤낮 하나님을 섬기매 보좌에 앉으신 이가 그들 위에 장막을 치시리니",
       16: "저희가 다시 주리지도 아니하며 목마르지도 아니하고 해나 아무 뜨거운 기운에 상하지 아니할지니",
-      17: "이는 보좌 가운데 계신 어린 양이 저희의 목자가 되사 생명수 샘으로 인도하시고 하나님께서 저희 눈에서 모든 눈물을 씻어 주실 것임이러라"
+      17: "이는 보좌 가운데 계신 어린 양이 저희의 목자가 되사 생명수 샘으로 인도하시고 하나님께서 저희 눈에서 모든 눈물을 씻어 주실 것임이러라",
     },
     8: {
       1: "일곱째 인을 떼실 때에 하늘이 반시 동안쯤 고요하더니",
@@ -161,20 +161,20 @@ const BIBLE_VERSES = {
       9: "바다 가운데 생명 가진 피조물들의 삼분의 일이 죽고 배들의 삼분의 일이 깨어지더라",
       10: "셋째 천사가 나팔을 부니 횃불같이 타는 큰 별이 하늘에서 떨어져 강들의 삼분의 일과 여러 물샘에 떨어지니",
       11: "이 별 이름은 쑥이라 물들의 삼분의 일이 쑥이 되매 그 물들이 쓰게 됨을 인하여 많은 사람이 죽더라",
-      12: "넷째 천사가 나팔을 부니 해 삼분의 일과 달 삼��의 일과 별들의 삼분의 일이 침을 받아 그 삼분의 일이 어두워지니 낮 삼분의 일은 비췸이 없고 밤도 그러하더라",
-      13: "내가 또 보고 들으니 공중에 날아가는 독수리가 큰 소리로 이르되 땅에 거하는 자들에게 화, 화, 화가 있으리로다 이 외에도 세 천사의 불 나팔 소리를 인함이로다 하더라"
+      12: "넷째 천사가 나팔을 부니 해 삼분의 일과 달 삼분의 일과 별들의 삼분의 일이 침을 받아 그 삼분의 일이 어두워지니 낮 삼분의 일은 비췸이 없고 밤도 그러하더라",
+      13: "내가 또 보고 들으니 공중에 날아가는 독수리가 큰 소리로 이르되 땅에 거하는 자들에게 화, 화, 화가 있으리로다 이 외에도 세 천사의 불 나팔 소리를 인함이로다 하더라",
     },
     9: {
       1: "다섯째 천사가 나팔을 불매 내가 보니 하늘에서 땅에 떨어진 별 하나가 있는데 저가 무저갱의 열쇠를 받았더라",
       2: "저가 무저갱을 여니 그 구멍에서 큰 풀무의 연기 같은 연기가 올라오매 해와 공기가 그 구멍의 연기로 인하여 어두워지며",
-      3: "또 연기 가운데로부터 메뚜기들이 땅 위에 나오매 저희가 땅에 있는 전갈의 권세와 같은 권세를 받았더라",
+      3: "또 황충이 연기 가운데로부터 땅 위에 나오매 저희가 땅에 있는 전갈의 권세와 같은 권세를 받았더라",
       4: "저희에게 이르시되 땅의 풀이나 푸른 것이나 각종 수목은 해하지 말고 오직 이마에 하나님의 인 맞지 아니한 사람들만 해하라 하시더라",
       5: "그러나 그들을 죽이지는 못하게 하시고 다섯 달 동안 괴롭게만 하게 하시는데 그 괴롭게 함은 전갈이 사람을 쏠 때에 괴롭게 함과 같더라",
       6: "그 날에는 사람들이 죽기를 구하여도 얻지 못하고 죽고 싶으나 죽음이 저희를 피하리로다",
-      7: "메뚜기들의 모양은 전쟁을 위하여 예비한 말들 같고 그 머리에 금 같은 면류관 비슷한 것을 썼으며 그 얼굴은 사람의 얼굴 같고",
+      7: "황충들의 모양은 전쟁을 위하여 예비한 말들 같고 그 머리에 금같은 면류관 비슷한 것을 썼으며 그 얼굴은 사람의 얼굴 같고",
       8: "또 여자의 머리털 같은 머리털이 있고 그 이는 사자의 이 같으며",
-      9: "또 철흉갑 같은 흉갑이 있고 그 날개들의 소리는 병거와 많은 말들이 전장으로 달려들어가는 소리 같으며",
-      10: "또 전갈과 같은 꼬리와 쏘는 살이 있어 그 꼬리에는 다섯 달 동안 사람들을 해하는 권세가 있더라",
+      9: "또 철흉갑 같은 흉갑이 있고 그 날개들의 소리는 병거와 많은 말들이 전장으로 달려 들어가는 소리 같으며",
+      10: "또 전갈과 같은 꼬리와 쏘는 살이 있어 그 꼬리에는 다섯달 동안 사람들을 해하는 권세가 있더라",
       11: "저희에게 임금이 있으니 무저갱의 사자라 히브리 음으로 이름은 아바돈이요 헬라 음으로 이름은 아볼루온이더라",
       12: "첫째 화는 지나갔으나 보라 아직도 이 후에 화 둘이 이르리로다",
       13: "여섯째 천사가 나팔을 불매 내가 들으니 하나님 앞 금단 네 뿔에서 한 음성이 나서",
@@ -185,7 +185,7 @@ const BIBLE_VERSES = {
       18: "이 세 재앙 곧 저희 입에서 나오는 불과 연기와 유황을 인하여 사람 삼분의 일이 죽임을 당하니라",
       19: "이 말들의 힘은 그 입과 그 꼬리에 있으니 그 꼬리는 뱀 같고 또 꼬리에 머리가 있어 이것으로 해하더라",
       20: "이 재앙에 죽지 않고 남은 사람들은 그 손으로 행하는 일을 회개치 아니하고 오히려 여러 귀신과 또는 보거나 듣거나 다니거나 하지 못하는 금, 은, 동과 목석의 우상에게 절하고",
-      21: "또 그 살인과 복술과 음행과 도적질을 회개치 아니하더라"
+      21: "또 그 살인과 복술과 음행과 도적질을 회개치 아니하더라",
     },
     10: {
       1: "내가 또 보니 힘센 다른 천사가 구름을 입고 하늘에서 내려오는데 그 머리 위에 무지개가 있고 그 얼굴은 해 같고 그 발은 불기둥 같으며",
@@ -198,7 +198,7 @@ const BIBLE_VERSES = {
       8: "하늘에서 나서 내게 들리던 음성이 또 내게 말하여 가로되 네가 가서 바다와 땅을 밟고 섰는 천사의 손에 펴 놓인 책을 가지라 하기로",
       9: "내가 천사에게 나아가 작은 책을 달라 한즉 천사가 가로되 갖다 먹어버리라 네 배에는 쓰나 네 입에는 꿀같이 달리라 하거늘",
       10: "내가 천사의 손에서 작은 책을 갖다 먹어버리니 내 입에는 꿀같이 다나 먹은 후에 내 배에서는 쓰게 되더라",
-      11: "저가 내게 말하기를 네가 많은 백성과 나라와 방언과 임금에게 다시 예언하여야 하리라 하더라"
+      11: "저가 내게 말하기를 네가 많은 백성과 나라와 방언과 임금에게 다시 예언하여야 하리라 하더라",
     },
     11: {
       1: "또 내게 지팡이 같은 갈대를 주며 말하기를 일어나서 하나님의 성전과 제단과 그 안에서 경배하는 자들을 척량하되",
@@ -215,11 +215,11 @@ const BIBLE_VERSES = {
       12: "하늘로부터 큰 음성이 있어 이리로 올라오라 함을 저희가 듣고 구름을 타고 하늘로 올라가니 저희 원수들도 구경하더라",
       13: "그 시에 큰 지진이 나서 성 십분의 일이 무너지고 지진에 죽은 사람이 칠천이라 그 남은 자들이 두려워하여 영광을 하늘의 하나님께 돌리더라",
       14: "둘째 화는 지나갔으나 보라 셋째 화가 속히 이르는도다",
-      15: "일곱째 천사가 나팔을 불매 하늘에 큰 음성들이 나서 가로되 세상 나라가 우리 주와 그 그리��도의 나라가 되��� 그가 세세토록 왕 노릇 하시리로다 하니",
+      15: "일곱째 천사가 나팔을 불매 하늘에 큰 음성들이 나서 가로되 세상 나라가 우리 주와 그 그리스도의 나라가 되어 그가 세세토록 왕노릇 하시리로다 하니",
       16: "하나님 앞에 자기 보좌에 앉은 이십사 장로들이 엎드려 얼굴을 대고 하나님께 경배하여",
       17: "가로되 감사하옵나니 옛적에도 계셨고 시방도 계신 주 하나님 곧 전능하신 이여 친히 큰 권능을 잡으시고 왕 노릇 하시도다",
       18: "이방들이 분노하매 주의 진노가 임하여 죽은 자를 심판하시며 종 선지자들과 성도들과 또 무론 대소하고 주의 이름을 경외하는 자들에게 상 주시며 또 땅을 망하게 하는 자들을 멸망시키실 때로소이다 하더라",
-      19: "이에 하늘에 있는 하나님의 성전이 열리니 성전 안에 하나님의 언약궤가 보이며 또 번개와 음성들과 뇌성과 지진과 큰 우박이 있더라"
+      19: "이에 하늘에 있는 하나님의 성전이 열리니 성전 안에 하나님의 언약궤가 보이며 또 번개와 음성들과 뇌성과 지진과 큰 우박이 있더라",
     },
     12: {
       1: "하늘에 큰 이적이 보이니 해를 입은 한 여자가 있는데 그 발 아래는 달이 있고 그 머리에는 열두 별의 면류관을 썼더라",
@@ -238,7 +238,7 @@ const BIBLE_VERSES = {
       14: "그 여자가 큰 독수리의 두 날개를 받아 광야 자기 곳으로 날아가 거기서 그 뱀의 낯을 피하여 한 때와 두 때와 반 때를 양육받으매",
       15: "여자의 뒤에서 뱀이 그 입으로 물을 강같이 토하여 여자를 물에 떠내려가게 하려 하되",
       16: "땅이 여자를 도와 그 입을 벌려 용의 입에서 토한 강물을 삼키니",
-      17: "용이 여자에게 분노하여 돌아가서 그 여자의 남은 자손 곧 하나님의 계명을 지키며 예수의 증거를 가진 자들로 더불어 싸우려고 바다 모래 위에 섰더라"
+      17: "용이 여자에게 분노하여 돌아가서 그 여자의 남은 자손 곧 하나님의 계명을 지키며 예수의 증거를 가진 자들로 더불어 싸우려고 바다 모래 위에 섰더라",
     },
     13: {
       1: "내가 보니 바다에서 한 짐승이 나오는데 뿔이 열이요 머리가 일곱이라 그 뿔에는 열 면류관이 있고 그 머리들에는 참람된 이름들이 있더라",
@@ -258,7 +258,7 @@ const BIBLE_VERSES = {
       15: "저가 권세를 받아 그 짐승의 우상에게 생기를 주어 그 짐승의 우상으로 말하게 하고 또 짐승의 우상에게 경배하지 아니하는 자는 몇이든지 다 죽이게 하더라",
       16: "저가 모든 자 곧 작은 자나 큰 자나 부자나 빈궁한 자나 자유한 자나 종들로 그 오른손에나 이마에 표를 받게 하고",
       17: "누구든지 이 표를 가진 자 외에는 매매를 못하게 하니 이 표는 곧 짐승의 이름이나 그 이름의 수라",
-      18: "지혜가 여기 있으니 총명 있는 자는 그 짐승의 수를 세어 보라 그 수는 사람의 수니 육백육십육이니라"
+      18: "지혜가 여기 있으니 총명 있는 자는 그 짐승의 수를 세어 보라 그 수는 사람의 수니 육백육십육이니라",
     },
     14: {
       1: "또 내가 보니 보라 어린 양이 시온 산에 섰고 그와 함께 십사만 사천이 섰는데 그 이마에 어린 양의 이름과 그 아버지의 이름을 쓴 것이 있도다",
@@ -280,7 +280,7 @@ const BIBLE_VERSES = {
       17: "또 다른 천사가 하늘에 있는 성전에서 나오는데 또한 이한 낫을 가졌더라",
       18: "또 불을 다스리는 다른 천사가 제단으로부터 나와 이한 낫 가진 자를 향하여 큰 음성으로 불러 가로되 네 이한 낫을 휘둘러 땅의 포도송이를 거두라 그 포도가 익었느니라 하더라",
       19: "천사가 낫을 땅에 휘둘러 땅의 포도를 거두어 하나님의 진노의 큰 포도주 틀에 던지매",
-      20: "성 밖에서 그 틀이 밟히니 틀에서 피가 나서 말 굴레까지 닿았고 일천 육백 스다디온에 퍼졌더라"
+      20: "성 밖에서 그 틀이 밟히니 틀에서 피가 나서 말 굴레까지 닿았고 일천 육백 스다디온에 퍼졌더라",
     },
     15: {
       1: "내가 하늘에서 크고 이상한 다른 이적을 보매 일곱 천사가 일곱 재앙을 가졌으니 곧 마지막 재앙이라 하나님의 진노가 이것으로 마치리로다",
@@ -290,7 +290,7 @@ const BIBLE_VERSES = {
       5: "또 이 일 후에 내가 보니 하늘에 증거 장막의 성전이 열리며",
       6: "일곱 재앙을 가진 일곱 천사가 성전으로부터 나와 맑고 빛난 세마포 옷을 입고 가슴에 금띠를 띠고",
       7: "네 생물 중에 하나가 세세에 계신 하나님의 진노를 가득히 담은 금대접 일곱을 그 일곱 천사에게 주니",
-      8: "하나님의 영광과 능력을 인하여 성전에 연기가 차게 되매 일곱 천사의 일곱 재앙이 마치기까지는 성전에 능히 들어갈 자가 없더라"
+      8: "하나님의 영광과 능력을 인하여 성전에 연기가 차게 되매 일곱 천사의 일곱 재앙이 마치기까지는 성전에 능히 들어갈 자가 없더라",
     },
     16: {
       1: "또 내가 들으니 성전에서 큰 음성이 나서 일곱 천사에게 말하되 너희는 가서 하나님의 진노의 일곱 대접을 땅에 쏟으라 하더라",
@@ -313,7 +313,7 @@ const BIBLE_VERSES = {
       18: "번개와 음성들과 뇌성이 있고 또 큰 지진이 있어 어찌 큰지 사람이 땅에 있어 옴으로 이같이 큰 지진이 없었더라",
       19: "큰 성이 세 갈래로 갈라지고 만국의 성들도 무너지니 큰 성 바벨론이 하나님 앞에 기억하신 바 되어 그의 맹렬한 진노의 포도주 잔을 받으매",
       20: "각 섬도 없어지고 산악도 간데없더라",
-      21: "또 중수가 한 달란트나 되는 큰 우박이 하늘로부터 사람들에게 내리매 사람들이 그 박재로 인하여 하나님을 훼방하니 그 재앙이 심히 큼이러라"
+      21: "또 중수가 한 달란트나 되는 큰 우박이 하늘로부터 사람들에게 내리매 사람들이 그 박재로 인하여 하나님을 훼방하니 그 재앙이 심히 큼이러라",
     },
     17: {
       1: "또 일곱 대접을 가진 일곱 천사 중 하나가 와서 내게 말하여 가로되 이리 오라 많은 물 위에 앉은 큰 음녀의 받을 심판을 네게 보이리라",
@@ -333,7 +333,7 @@ const BIBLE_VERSES = {
       15: "또 천사가 내게 말하되 네가 본 바 음녀의 앉은 물은 백성과 무리와 열국과 방언들이니라",
       16: "네가 본 바 이 열 뿔과 짐승이 음녀를 미워하여 망하게 하고 벌거벗게 하고 그 살을 먹고 불로 아주 사르리라",
       17: "하나님이 자기 뜻대로 할 마음을 저희에게 주사 한 뜻을 이루게 하시고 저희 나라를 그 짐승에게 주게 하시되 하나님 말씀이 응하기까지 하심이니라",
-      18: "또 네가 본 바 여자는 땅의 임금들을 다스리는 큰 성이라 하더라"
+      18: "또 네가 본 바 여자는 땅의 임금들을 다스리는 큰 성이라 하더라",
     },
     18: {
       1: "이 일 후에 다른 천사가 하늘에서 내려오는 것을 보니 큰 권세를 가졌는데 그의 영광으로 땅이 환하여지더라",
@@ -359,7 +359,7 @@ const BIBLE_VERSES = {
       21: "이에 한 힘센 천사가 큰 맷돌 같은 돌을 들어 바다에 던져 가로되 큰 성 바벨론이 이같이 몹시 떨어져 결코 다시 보이지 아니하리로다",
       22: "또 거문고 타는 자와 풍류하는 자와 퉁소 부는 자와 나팔 부는 자들의 소리가 결코 다시 네 가운데서 들리지 아니하고 물론 어떠한 세공업자든지 결코 다시 네 가운데서 보이지 아니하고 또 맷돌 소리가 결코 다시 네 가운데서 들리지 아니하고",
       23: "등불 빛이 결코 다시 네 가운데서 비취지 아니하고 신랑과 신부의 음성이 결코 다시 네 가운데서 들리지 아니하리로다 너의 상고들은 땅의 왕족들이라 네 복술을 인하여 만국이 미혹되었도다",
-      24: "선지자들과 성도들과 및 땅 위에서 죽임을 당한 모든 자의 피가 이 성중에서 보였느니라 하더라"
+      24: "선지자들과 성도들과 및 땅 위에서 죽임을 당한 모든 자의 피가 이 성중에서 보였느니라 하더라",
     },
     19: {
       1: "이 일 후에 내가 들으니 하늘에 허다한 무리의 큰 음성 같은 것이 있어 가로되 할렐루야 구원과 영광과 능력이 우리 하나님께 있도다",
@@ -367,7 +367,7 @@ const BIBLE_VERSES = {
       3: "두 번째 가로되 할렐루야 하더니 그 연기가 세세토록 올라가더라",
       4: "또 이십사 장로와 네 생물이 엎드려 보좌에 앉으신 하나님께 경배하여 가로되 아멘 할렐루야 하니",
       5: "보좌에서 음성이 나서 가로되 하나님의 종들 곧 그를 경외하는 너희들아 무론 대소하고 다 우리 하나님께 찬송하라 하더라",
-      6: "또 내��� 들으니 허다한 무리의 음성도 같고 많은 물소리도 같고 큰 뇌성도 같아서 가로되 할렐루야 주 우리 하나님 곧 전능하신 이가 통치하시도다",
+      6: "또 내가 들으니 허다한 무리의 음성도 같고 많은 물소리도 같고 큰 뇌성도 같아서 가로되 할렐루야 주 우리 하나님 곧 전능하신 이가 통치하시도다",
       7: "우리가 즐거워하고 크게 기뻐하여 그에게 영광을 돌리세 어린 양의 혼인 기약이 이르렀고 그 아내가 예비하였으니",
       8: "그에게 허락하사 빛나고 깨끗한 세마포를 입게 하셨은즉 이 세마포는 성도들의 옳은 행실이로다 하더라",
       9: "천사가 내게 말하기를 기록하라 어린 양의 혼인 잔치에 청함을 입은 자들이 복이 있도다 하고 또 내게 말하되 이것은 하나님의 참되신 말씀이라 하기로",
@@ -382,24 +382,24 @@ const BIBLE_VERSES = {
       18: "왕들의 고기와 장군들의 고기와 장사들의 고기와 말들과 그 탄 자들의 고기와 자유한 자들이나 종들이나 무론 대소하고 모든 자의 고기를 먹으라 하더라",
       19: "또 내가 보매 그 짐승과 땅의 임금들과 그 군대들이 모여 그 말 탄 자와 그의 군대로 더불어 전쟁을 일으키다가",
       20: "짐승이 잡히고 그 앞에서 이적을 행하던 거짓 선지자도 함께 잡혔으니 이는 짐승의 표를 받고 그의 우상에게 경배하던 자들을 이적으로 미혹하던 자라 이 둘이 산 채로 유황불 붙는 못에 던지우고",
-      21: "그 나머지는 말 탄 자의 입으로 나오는 검에 죽으매 모든 새가 그 고기로 배불리우더라"
+      21: "그 나머지는 말 탄 자의 입으로 나오는 검에 죽으매 모든 새가 그 고기로 배불리우더라",
     },
     20: {
       1: "또 내가 보매 천사가 무저갱 열쇠와 큰 쇠사슬을 그 손에 가지고 하늘로서 내려와서",
       2: "용을 잡으니 곧 옛 뱀이요 마귀요 사단이라 잡아 일천 년 동안 결박하여",
-      3: "무저갱에 던져 잠그고 그 위에 인봉하여 천 년이 차도록 다시는 만국을 미혹하지 못하게 하였다가 그 후에는 반드시 잠깐 놓이리라",
-      4: "또 내가 보좌들을 보니 거기 앉은 자들이 있어 심판하는 권세를 받았더라 또 내가 보니 예수의 증거와 하나님의 말씀을 인하여 목 베임을 받은 자의 영혼들과 또 짐승과 그의 우상에게 경배하지도 아니하고 이마와 손에 그의 표를 받지도 아니한 자들이 살아서 그리스도로 더불어 천 년 동안 왕 노릇 하니",
-      5: "그 나머지 죽은 자들은 그 천 년이 차기까지 살지 못하더라 이는 첫째 부활이라",
-      6: "이 첫째 부활에 참여하는 자들은 복이 있고 거룩하도다 둘째 사망이 그들을 다스리는 권세가 없고 도리어 그들이 하나님과 그리스도의 제사장이 되어 천 년 동안 그리스도로 더불어 왕 노릇 하리라",
+      3: "무저갱에 던져 잠그고 그 위에 인봉하여 천 년이 차도록 다시는 만국을 미혹하지 못하게 하였다가 그 후에는 반드시 잠간 놓이리라",
+      4: "또 내가 보좌들을 보니 거기 앉은 자들이 있어 심판하는 권세를 받았더라 또 내가 보니 예수의 증거와 하나님의 말씀을 인하여 목 베임을 받은 자의 영혼들과 또 짐승과 그의 우상에게 경배하지도 아니하고 이마와 손에 그의 표를 받지도 아니한 자들이 살아서 그리스도로 더불어 천년 동안 왕노릇 하니",
+      5: "그 나머지 죽은 자들은 그 천년이 차기까지 살지 못하더라 이는 첫째 부활이라",
+      6: "이 첫째 부활에 참예하는 자들은 복이 있고 거룩하도다 둘째 사망이 그들을 다스리는 권세가 없고 도리어 그들이 하나님과 그리스도의 제사장이 되어 천년 동안 그리스도로 더불어 왕 노릇 하리라",
       7: "천 년이 차매 사단이 그 옥에서 놓여",
       8: "나와서 땅의 사방 백성 곧 곡과 마곡을 미혹하고 모아 싸움을 붙이리니 그 수가 바다 모래 같으리라",
       9: "저희가 지면에 널리 퍼져 성도들의 진과 사랑하시는 성을 두르매 하늘에서 불이 내려와 저희를 소멸하고",
       10: "또 저희를 미혹하는 마귀가 불과 유황 못에 던지우니 거기는 그 짐승과 거짓 선지자도 있어 세세토록 밤낮 괴로움을 받으리라",
-      11: "또 내가 크고 흰 보좌와 그 위에 앉으신 자를 보니 땅과 하늘이 그 앞에서 피하여 간데없더라",
+      11: "또 내가 크고 흰 보좌와 그 위에 앉으신 자를 보니 땅과 하늘이 그 앞에서 피하여 간데 없더라",
       12: "또 내가 보니 죽은 자들이 무론 대소하고 그 보좌 앞에 섰는데 책들이 펴 있고 또 다른 책이 펴졌으니 곧 생명책이라 죽은 자들이 자기 행위를 따라 책들에 기록된 대로 심판을 받으니",
       13: "바다가 그 가운데서 죽은 자들을 내어주고 또 사망과 음부도 그 가운데서 죽은 자들을 내어주매 각 사람이 자기의 행위대로 심판을 받고",
       14: "사망과 음부도 불못에 던지우니 이것은 둘째 사망 곧 불못이라",
-      15: "누구든지 생명책에 기록되지 못한 자는 불못에 던지우더라"
+      15: "누구든지 생명책에 기록되지 못한 자는 불못에 던지우더라",
     },
     21: {
       1: "또 내가 새 하늘과 새 땅을 보니 처음 하늘과 처음 땅이 없어졌고 바다도 다시 있지 않더라",
@@ -409,54 +409,54 @@ const BIBLE_VERSES = {
       5: "보좌에 앉으신 이가 가라사대 보라 내가 만물을 새롭게 하노라 하시고 또 가라사대 이 말은 신실하고 참되니 기록하라 하시고",
       6: "또 내게 말씀하시되 이루었도다 나는 알파와 오메가요 처음과 나중이라 내가 생명수 샘물로 목마른 자에게 값없이 주리니",
       7: "이기는 자는 이것들을 유업으로 얻으리라 나는 저의 하나님이 되고 그는 내 아들이 되리라",
-      8: "그러나 두려워하는 자들과 믿지 아니하는 자들과 흉악한 자들과 살인자들과 행음자들과 술객들과 우상 숭배자들과 모든 거짓말하는 자들은 불과 유황으로 타는 못에 참여하리니 이것이 둘째 사망이라",
-      9: "일곱 대접을 가지고 마지막 일곱 재앙을 담은 일곱 천사 중 하나가 나아와서 내게 말하여 가로되 이리 오라 내가 신부 곧 어린 양의 아내를 네게 보이리라 하고",
+      8: "그러나 두려워하는 자들과 믿지 아니하는 자들과 흉악한 자들과 살인자들과 행음자들과 술객들과 우상 숭배자들과 모든 거짓말 하는 자들은 불과 유황으로 타는 못에 참예 하리니 이것이 둘째 사망이라",
+      9: "일곱 대접을 가지고 마지막 일곱 재앙을 담은 일곱 천사중 하나가 나아와서 내게 말하여 가로되 이리 오라 내가 신부 곧 어린 양의 아내를 네게 보이리라 하고",
       10: "성령으로 나를 데리고 크고 높은 산으로 올라가 하나님께로부터 하늘에서 내려오는 거룩한 성 예루살렘을 보이니",
       11: "하나님의 영광이 있으매 그 성의 빛이 지극히 귀한 보석 같고 벽옥과 수정같이 맑더라",
-      12: "크고 높은 성곽이 있고 열두 문이 있는데 문에 열두 천사가 있고 그 문들 위에 이름을 썼으니 이스라엘 자손 열두 지파의 이름들이라",
+      12: "크고 높은 성곽이 있고 열 두 문이 있는데 문에 열 두 천사가 있고 그 문들 위에 이름을 썼으니 이스라엘 자손 열 두 지파의 이름들이라",
       13: "동편에 세 문, 북편에 세 문, 남편에 세 문, 서편에 세 문이니",
-      14: "그 성에 성곽은 열두 기초석이 있고 그 위에 어린 양의 십이 사도의 열두 이름이 있더라",
+      14: "그 성에 성곽은 열두 기초석이 있고 그 위에 어린 양의 십 이 사도의 열 두 이름이 있더라",
       15: "내게 말하는 자가 그 성과 그 문들과 성곽을 척량하려고 금 갈대를 가졌더라",
-      16: "��� 성은 네모가 반듯하여 장광이 같은지라 그 갈대로 그 성을 척량하니 일만 이천 스다디온이요 장과 광과 고가 같더라",
+      16: "그 성은 네모가 반듯하여 장광이 같은지라 그 갈대로 그 성을 척량하니 일만 이천 스다디온이요 장과 광과 고가 같더라",
       17: "그 성곽을 척량하매 일백사십사 규빗이니 사람의 척량 곧 천사의 척량이라",
       18: "그 성곽은 벽옥으로 쌓였고 그 성은 정금인데 맑은 유리 같더라",
-      19: "그 성의 성곽의 기초석은 각색 보석으로 꾸몄는데 첫째 기초석은 벽옥이요 둘째는 남보석이요 셋째는 옥수요 넷째는 녹보석이요",
-      20: "다섯째는 홍마노요 여섯째는 홍보석이요 일곱째는 황옥이요 여덟째는 녹옥이요 아홉째는 담황옥이요 열째는 비취옥이요 열한째는 청옥이요 열두째는 자정이라",
-      21: "그 열두 문은 열두 진주니 문마다 한 진주요 성의 길은 맑은 유리 같은 정금이더라",
+      19: "그 성의 성곽의 기초석은 각색 보석으로 꾸몄는데 첫째 기초석은 벽옥이요 둘째는 남보석이요 세째는 옥수요 네째는 녹보석이요",
+      20: "다섯째는 홍마노요 여섯째는 홍보석이요 일곱째는 황옥이요 여덟째는 녹옥이요 아홉째는 담황옥이요 열째는 비취옥이요 열 한째는 청옥이요 열 두째는 자정이라",
+      21: "그 열 두 문은 열 두 진주니 문마다 한 진주요 성의 길은 맑은 유리 같은 정금이더라",
       22: "성안에 성전을 내가 보지 못하였으니 이는 주 하나님 곧 전능하신 이와 및 어린 양이 그 성전이심이라",
       23: "그 성은 해나 달의 비췸이 쓸데없으니 이는 하나님의 영광이 비취고 어린 양이 그 등이 되심이라",
       24: "만국이 그 빛 가운데로 다니고 땅의 왕들이 자기 영광을 가지고 그리로 들어오리라",
       25: "성문들을 낮에 도무지 닫지 아니하리니 거기는 밤이 없음이라",
       26: "사람들이 만국의 영광과 존귀를 가지고 그리로 들어오겠고",
-      27: "무엇이든지 속된 것이나 가증한 일 또는 거짓말하는 자는 결코 그리로 들어오지 못하되 오직 어린 양의 생명책에 기록된 자들뿐이라"
+      27: "무엇이든지 속된 것이나 가증한 일 또는 거짓말하는 자는 결코 그리로 들어오지 못하되 오직 어린 양의 생명책에 기록된 자들뿐이라",
     },
     22: {
       1: "또 저가 수정같이 맑은 생명수의 강을 내게 보이니 하나님과 및 어린 양의 보좌로부터 나서",
       2: "길 가운데로 흐르더라 강 좌우에 생명나무가 있어 열두 가지 실과를 맺히되 달마다 그 실과를 맺히고 그 나무 잎사귀들은 만국을 소성하기 위하여 있더라",
       3: "다시 저주가 없으며 하나님과 그 어린 양의 보좌가 그 가운데 있으리니 그의 종들이 그를 섬기며",
       4: "그의 얼굴을 볼 터이요 그의 이름도 저희 이마에 있으리라",
-      5: "다시 밤이 없겠고 등불과 햇빛이 쓸데없으니 이는 주 하나님이 저희에게 비취심이라 저희가 세세토록 왕 노릇 하리로다",
+      5: "다시 밤이 없겠고 등불과 햇빛이 쓸데없으니 이는 주 하나님이 저희에게 비취심이라 저희가 세세토록 왕노릇하리로다",
       6: "또 그가 내게 말하기를 이 말은 신실하고 참된지라 주 곧 선지자들의 영의 하나님이 그의 종들에게 결코 속히 될 일을 보이시려고 그의 천사를 보내셨도다",
       7: "보라 내가 속히 오리니 이 책의 예언의 말씀을 지키는 자가 복이 있으리라 하더라",
-      8: "이것들을 보고 들은 자는 나 요한이니 내가 듣고 볼 때에 이 일을 내게 보이던 천사의 발 앞에 경배하려고 엎드렸더니",
-      9: "저가 내게 말하기를 나는 너와 네 형제 선지자들과 또 이 책의 말을 지키는 자들과 함께 된 종이니 그리하지 말고 오직 하나님께 경배하라 하더라",
+      8: "이것들을 보고 들은 자는 나 요한이니 내가 듣고 볼 때에 이 일을 내게 보이던 천사의 발앞에 경배하려고 엎드렸더니",
+      9: "저가 내게 말하기를 나는 너와 네 형제 선지자들과 또 이 책의 말을 지키는 자들과 함께 된종이니 그리하지 말고 오직 하나님께 경배하라 하더라",
       10: "또 내게 말하되 이 책의 예언의 말씀을 인봉하지 말라 때가 가까우니라",
       11: "불의를 하는 자는 그대로 불의를 하고 더러운 자는 그대로 더럽고 의로운 자는 그대로 의를 행하고 거룩한 자는 그대로 거룩되게 하라",
-      12: "보라 내가 속히 오리니 내가 줄 상이 내게 있어 각 사람에게 그의 일한 대로 갚아 주리라",
+      12: "보라 내가 속히 오리니 내가 줄 상이 내게 있어 각 사람에게 그의 일한대로 갚아 주리라",
       13: "나는 알파와 오메가요 처음과 나중이요 시작과 끝이라",
-      14: "그 두루마기를 빠는 자들은 복이 있으니 이는 저희가 생명나무에 나아가며 문들을 통하여 성에 들어갈 권세를 얻으려 함이로다",
-      15: "개들과 술객들과 행음자들과 살인자들과 우상 숭배자들과 및 거짓말을 좋아하며 지어내는 자마다 성 밖에 있으리라",
-      16: "나 예수는 교회들을 위하여 내 사자를 보내어 이것들을 너희에게 증거하게 하였노라 나는 다윗의 뿌리요 자손이니 곧 광명한 새벽 별이라 하시더라",
+      14: "그 두루마기를 빠는 자들은 복이 있으니 이는 저희가 생명 나무에 나아가며 문들을 통하여 성에 들어갈 권세를 얻으려 함이로다",
+      15: "개들과 술객들과 행음자들과 살인자들과 우상 숭배자들과 및 거짓말을 좋아하며 지어내는 자마다 성밖에 있으리라",
+      16: "나 예수는 교회들을 위하여 내 사자를 보내어 이것들을 너희에게 증거하게 하였노라 나는 다윗의 뿌리요 자손이니 곧 광명한 새벽별이라 하시더라",
       17: "성령과 신부가 말씀하시기를 오라 하시는도다 듣는 자도 오라 할 것이요 목마른 자도 올 것이요 또 원하는 자는 값없이 생명수를 받으라 하시더라",
       18: "내가 이 책의 예언의 말씀을 듣는 각인에게 증거하노니 만일 누구든지 이것들 외에 더하면 하나님이 이 책에 기록된 재앙들을 그에게 더하실 터이요",
-      19: "만일 누구든지 이 책의 예언의 말씀에서 제하여 버리면 하나님이 이 책에 기록된 생명나무와 및 거룩한 성에 참여함을 제하여 버리시리라",
+      19: "만일 누구든지 이 책의 예언의 말씀에서 제하여 버리면 하나님이 이 책에 기록된 생명 나무와 및 거룩한 성에 참예함을 제하여 버리시리라",
       20: "이것들을 증거하신 이가 가라사대 내가 진실로 속히 오리라 하시거늘 아멘 주 예수여 오시옵소서",
-      21: "주 예수의 은혜가 모든 자들에게 있을지어다 아멘"
-    }
-  }
+      21: "주 예수의 은혜가 모든 자들에게 있을지어다 아멘",
+    },
+  },
 };
 function BibleQuiz({ verse }) {
-  const [quizText, setQuizText] = useState('');
+  const [quizText, setQuizText] = useState("");
   const [answers, setAnswers] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]);
   const [results, setResults] = useState(null);
@@ -467,10 +467,10 @@ function BibleQuiz({ verse }) {
   }, [verse]);
 
   const createQuiz = (text) => {
-    const words = text.split(' ');
+    const words = text.split(" ");
     const numBlanks = Math.floor(words.length * blankRatio);
     const blankIndices = new Set();
-    
+
     while (blankIndices.size < numBlanks) {
       const randomIndex = Math.floor(Math.random() * words.length);
       blankIndices.add(randomIndex);
@@ -480,18 +480,20 @@ function BibleQuiz({ verse }) {
 
     // 빈칸에 번호 추가
     let blankCount = 1;
-  const quizWords = words.map((word, index) => 
+    const quizWords = words.map((word, index) =>
       sortedBlankIndices.includes(index)
-        ? `(${blankCount++}) ${'_'.repeat(word.length)}`
+        ? `(${blankCount++}) ${"_".repeat(word.length)}`
         : word
     );
 
-    setQuizText(quizWords.join(' '));
-    setAnswers(sortedBlankIndices.map(index => ({
-      index,
-      word: words[index]
-    })));
-    setUserAnswers(new Array(sortedBlankIndices.length).fill(''));
+    setQuizText(quizWords.join(" "));
+    setAnswers(
+      sortedBlankIndices.map((index) => ({
+        index,
+        word: words[index],
+      }))
+    );
+    setUserAnswers(new Array(sortedBlankIndices.length).fill(""));
     setResults(null);
   };
 
@@ -500,21 +502,22 @@ function BibleQuiz({ verse }) {
     newAnswers[index] = value;
     setUserAnswers(newAnswers);
   };
-//  userAnswer 배열에 있는 값에 인덱스를 부여해서 값을 설정함, 그것을 state 에 저장함
+  //  userAnswer 배열에 있는 값에 인덱스를 부여해서 값을 설정함, 그것을 state 에 저장함
 
-const handleRatioChange = (e) => {
-  const newRatio = parseFloat(e.target.value);
-  if (newRatio >= 0.1 && newRatio <= 0.9) { // 10%~90% 범위로 제한
-    setBlankRatio(newRatio);
-    createQuiz(verse.text); // 새로운 비율로 퀴즈 생성
-  }
-};
+  const handleRatioChange = (e) => {
+    const newRatio = parseFloat(e.target.value);
+    if (newRatio >= 0.1 && newRatio <= 0.9) {
+      // 10%~90% 범위로 제한
+      setBlankRatio(newRatio);
+      createQuiz(verse.text); // 새로운 비율로 퀴즈 생성
+    }
+  };
 
   const checkAnswers = () => {
     const newResults = userAnswers.map((answer, index) => ({
       userAnswer: answer,
       correctAnswer: answers[index].word,
-      isCorrect: answer === answers[index].word
+      isCorrect: answer === answers[index].word,
     }));
     setResults(newResults);
   };
@@ -536,8 +539,7 @@ const handleRatioChange = (e) => {
       </div>
 
       <p className="quiz-text">{quizText}</p>
-      
-      
+
       <div className="answers-container">
         {answers.map((answer, index) => (
           <div key={index} className="answer-input">
@@ -562,7 +564,7 @@ const handleRatioChange = (e) => {
           <h4>결과:</h4>
           {results.map((result, index) => (
             <p key={index}>
-              빈칸 ({index + 1}): 
+              빈칸 ({index + 1}):
               {result.isCorrect ? (
                 <span className="correct">정답!</span>
               ) : (
@@ -591,7 +593,6 @@ const handleRatioChange = (e) => {
           word-break: keep-all;
         }
 
-        
         .ratio-control {
           margin: 20px 0;
           display: flex;
@@ -601,7 +602,7 @@ const handleRatioChange = (e) => {
         }
         .ratio-control p {
           font-size: 12px;
-          color : #f00;
+          color: #f00;
         }
 
         .ratio-control label {
@@ -610,7 +611,7 @@ const handleRatioChange = (e) => {
 
         .ratio-control input[type="range"] {
           flex: 1;
-          width : 300px;
+          width: 300px;
           max-width: 600px;
         }
         .answers-container {
@@ -648,7 +649,7 @@ const handleRatioChange = (e) => {
 
         button {
           padding: 10px 20px;
-          background-color: #4CAF50;
+          background-color: #4caf50;
           color: white;
           border: none;
           border-radius: 4px;
@@ -665,19 +666,37 @@ const handleRatioChange = (e) => {
           padding: 15px;
           background-color: #fff;
           border-radius: 4px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .correct {
-          color: #4CAF50;
+          color: #4caf50;
           font-weight: bold;
           margin-left: 10px;
         }
 
         .incorrect {
-          color: #FF5252;
+          color: #ff5252;
           font-weight: bold;
           margin-left: 10px;
+        }
+        .progress-container {
+          width: 100%;
+          margin: 20px 0;
+        }
+
+        .progress-bar {
+          width: 100%;
+          height: 16px;
+          background: #eee;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        .progress-fill {
+          height: 100%;
+          background: #4a90e2;
+          transition: width 0.3s ease-out;
         }
       `}</style>
     </div>
@@ -686,26 +705,73 @@ const handleRatioChange = (e) => {
 
 export default function App() {
   // state 선언을 먼저 합니다
+  const [modalMessage, setModalMessage] = useState("");  
+const [showModal, setShowModal] = useState(false);  
   const [selectedLevel, setSelectedLevel] = useState(null);
-
-  
+  const [colorizedInput, setColorizedInput] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);  
   const [currentVerse, setCurrentVerse] = useState({
     text: BIBLE_VERSES.revelation[1][1],
-    book: '계시록',
+    book: "계시록",
     chapter: 1,
-    verse: 1
+    verse: 1,
   });
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [isCorrect, setIsCorrect] = useState(true);
   const [stats, setStats] = useState({
     wpm: 0,
     accuracy: 100,
-    progress: 0
+    progress: 0,
   });
-  
+
   const startTimeRef = useRef(null);
   const errorsRef = useRef(0);
 
+  useEffect(() => {  
+    setUserInput('');  
+    setColorizedInput([]);  
+  }, [currentVerse]); // currentVerse가 변경될 때마다 실행  
+
+  
+// 이전/다음 구절 이동을 처리하는 함수를 추가합니다  
+const handleVerseNavigation = (direction) => {  
+  const currentChapter = currentVerse.chapter;  
+  const currentVerseNum = currentVerse.verse;  
+  
+  // 현재 챕터의 마지막 구절 번호 확인  
+  const lastVerseInChapter = Object.keys(BIBLE_VERSES.revelation[currentChapter]).length;  
+  
+  if (direction === 'prev') {  
+    if (currentVerseNum === 1) {  
+      setModalMessage("첫 구절입니다.");  
+      setShowModal(true);  
+      setTimeout(() => setShowModal(false), 2000);  
+    } else {  
+      handleVerseSelection('verse', currentVerseNum - 1);  
+    }  
+  } else if (direction === 'next') {  
+    if (currentVerseNum === lastVerseInChapter) {  
+      setModalMessage("마지막 구절입니다.");  
+      setShowModal(true);  
+      setTimeout(() => setShowModal(false), 2000);  
+    } else {  
+      handleVerseSelection('verse', currentVerseNum + 1);  
+    }  
+  }  
+};  
+
+// Modal 컴포넌트를 만듭니다  
+const Modal = ({ message, show }) => {  
+  if (!show) return null;  
+  
+  return (  
+    <div className="modal">  
+      <div className="modal-content">  
+        <p>{message}</p>  
+      </div>  
+    </div>  
+  );  
+};  
   const handleLevelSelect = (level) => {
     setSelectedLevel(level);
     // 레벨에 따라 사용 가능한 장 설정
@@ -725,50 +791,46 @@ export default function App() {
     }
     setCurrentVerse({
       text: BIBLE_VERSES.revelation[1][1],
-      book: '계시록',
+      book: "계시록",
       chapter: 1,
-      verse: 1
+      verse: 1,
     });
   };
 
   const handleVerseSelection = (type, value) => {
-    let newChapter = currentVerse.chapter;
-    let newVerse = currentVerse.verse;
-    
     // 선택된 레벨에 따른 최대 장 수 설정
     const maxChapter = selectedLevel === 1 ? 7 : selectedLevel === 2 ? 14 : 22;
 
-    if (type === 'chapter') {
-      // 선택된 장이 최대 장 수를 넘지 않도록 제한
-      if (value <= maxChapter) {
-        newChapter = parseInt(value);
-        newVerse = 1;
-      }
-    } else if (type === 'verse') {
-      newVerse = parseInt(value);
-    }
-
-    const selectedVerse = BIBLE_VERSES.revelation[newChapter]?.[newVerse];
-    
-    if (selectedVerse) {
-      setCurrentVerse({
-        text: selectedVerse,
-        book: '계시록',
-        chapter: newChapter,
-        verse: newVerse
-      });
-      
-      
-      setUserInput('');
-      setIsCorrect(true);
-      startTimeRef.current = null;
-      errorsRef.current = 0;
-      setStats({
-        wpm: 0,
-        accuracy: 100,
-        progress: 0
-      });
-    }
+    if (type === "chapter") {  
+      // 장 선택시  
+      if (value > 0 && value <= maxChapter) {  
+        setCurrentVerse({  
+          text: BIBLE_VERSES.revelation[value][1],  
+          book: "계시록",  
+          chapter: value,  
+          verse: 1  
+        });  
+      }  
+    } else if (type === "verse") {  
+      // 절 선택시  
+      if (BIBLE_VERSES.revelation[currentVerse.chapter][value]) {  
+        setCurrentVerse({  
+          text: BIBLE_VERSES.revelation[currentVerse.chapter][value],  
+          book: "계시록",  
+          chapter: currentVerse.chapter,  
+          verse: value  
+        });  
+      }  
+    }  
+    setUserInput('');  
+  setColorizedInput([]);  
+  startTimeRef.current = null;  
+  errorsRef.current = 0;  
+  setStats({  
+    wpm: 0,  
+    accuracy: 100,  
+    progress: 0  
+  });  
   };
 
   const calculateStats = (input) => {
@@ -776,14 +838,29 @@ export default function App() {
       startTimeRef.current = new Date();
     }
 
+    let errors = 0;
+    const targetText = currentVerse.text;
+    const inputLength = input.length;
+
+    for (let i = 0; i < inputLength; i++) {
+      if (input[i] !== targetText[i]) {
+        errors++;
+      }
+    }
+
     const currentTime = new Date();
     const timeElapsed = (currentTime - startTimeRef.current) / 1000 / 60;
 
-    const wordsTyped = input.trim().split(' ').length;
+    const wordsTyped = input.trim().split(" ").length;
     const wpm = timeElapsed > 0 ? Math.round(wordsTyped / timeElapsed) : 0;
 
-    const progress = Math.round((input.length / currentVerse.text.length) * 100);
-    const accuracy = Math.max(0, 100 - (errorsRef.current / input.length * 100));
+    const progress = Math.round(
+      (input.length / currentVerse.text.length) * 100
+    );
+
+    // Calculate accuracy based on current errors
+    const accuracy =
+      inputLength > 0 ? Math.max(0, 100 - (errors / inputLength) * 100) : 100;
 
     setStats({
       wpm,
@@ -795,37 +872,34 @@ export default function App() {
   const handleInputChange = (e) => {
     const text = e.target.value;
     setUserInput(text);
-    
+
     const targetText = currentVerse.text;
-    const isInputCorrect = targetText.startsWith(text);
-    
-    if (!isInputCorrect) {
-      errorsRef.current += 1;
-    }
-    
-    setIsCorrect(isInputCorrect);
+    const initialColorized = Array.from(text).map((char, i) => ({
+      char,
+      isCorrect: char === targetText[i],
+    }));
+
+    setColorizedInput(initialColorized);
     calculateStats(text);
 
     if (text === targetText) {
-      alert('구절 입력 완료! 다음 구절로 이동하시겠습니까?');
+      alert("구절 입력 완료! 다음 구절로 이동하시겠습니까?");
       const nextVerse = currentVerse.verse + 1;
       if (BIBLE_VERSES.revelation[currentVerse.chapter]?.[nextVerse]) {
-        handleVerseSelection('verse', nextVerse);
+        handleVerseSelection("verse", nextVerse);
       }
     }
   };
   if (!selectedLevel) {
     return <MainMenu onLevelSelect={handleLevelSelect} />;
   }
-
   return (
     <div className="container">
       <h1>계시록 타자 연습</h1>
-      <h2>현재 단계는 <span>레벨 {selectedLevel}</span> 입니다.</h2>
-      <button 
-        className="back-button" 
-        onClick={() => setSelectedLevel(null)}
-      >
+      <h2>
+        현재 단계는 <span>레벨 {selectedLevel}</span> 입니다.
+      </h2>
+      <button className="back-button" onClick={() => setSelectedLevel(null)}>
         메인 메뉴로 돌아가기
       </button>
       <div className="content">
@@ -836,47 +910,82 @@ export default function App() {
           onSelect={handleVerseSelection}
           selectedLevel={selectedLevel}
         />
-        
-        <div className="reference">
-          계시록 {currentVerse.chapter}장 {currentVerse.verse}절
-        </div>
-        
-        <div className="verse">{currentVerse.text}</div>
-        
-        <textarea
-          className={`input ${isCorrect ? 'correct' : 'incorrect'}`}
-          value={userInput}
-          onChange={handleInputChange}
-          placeholder="여기에 성경 구절을 입력하세요..."
-        />
 
+<div className="reference">  
+  <button   
+    className="nav-button prev"  
+    onClick={() => handleVerseNavigation('prev')}  
+  >  
+    ◀ 이전  
+  </button>  
+  <span>계시록 {currentVerse.chapter}장 {currentVerse.verse}절</span>  
+  <button   
+    className="nav-button next"  
+    onClick={() => handleVerseNavigation('next')}  
+  >  
+    다음 ▶  
+  </button>  
+  <Modal message={modalMessage} show={showModal} />  
+</div>  
+        <div className="verse">{currentVerse.text}</div>
+
+        <div className="input-container">  
+  {colorizedInput.map((char, i) => (  
+    <React.Fragment key={i}>  
+      <span className={char.isCorrect ? 'correct' : 'incorrect'}>  
+        {char.char}  
+      </span>  
+      {i === userInput.length - 1 && isFocused && (  
+        <span className="cursor"></span>  
+      )}  
+    </React.Fragment>  
+  ))}  
+  {userInput.length === 0 && isFocused && <span className="cursor"></span>} 
+  <textarea  
+    className="hidden-input"  
+    value={userInput}  
+    onChange={handleInputChange}  
+    onFocus={() => setIsFocused(true)}  
+    onBlur={() => setIsFocused(false)}  
+    placeholder = "여기에 성경 구절을 입력하세요..."
+  />  
+</div>  
+
+        <div className="progress-container">
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ width: `${stats.progress}%` }}
+            />
+          </div>
+        </div>
         <div className="stats-container">
           <div>WPM: {stats.wpm}</div>
           <div>정확도: {stats.accuracy}%</div>
           <div>진행률: {stats.progress}%</div>
         </div>
-
         <BibleQuiz verse={currentVerse} />
       </div>
 
       <style jsx>{`
-       .back-button {
+
+        .back-button {
           position: absolute;
           top: 20px;
           left: 20px;
           padding: 10px 20px;
-          
+
           color: white;
           border: none;
           border-radius: 25px;
           cursor: pointer;
           transition: all 0.3s ease;
         }
-        .back-button:hover{
-        color : white;
-        background-color: #ffffff;
+        .back-button:hover {
+          color: white;
+          background-color: #ffffff;
         }
-        
+
         .back-button:hover {
           background-color: #5a6268;
         }
@@ -884,14 +993,14 @@ export default function App() {
           max-width: 800px;
           margin: 0 auto;
           padding: 20px;
-          font-family: 'Noto Sans KR', sans-serif;
+          font-family: "Noto Sans KR", sans-serif;
         }
-        .container h2{
+        .container h2 {
           text-align: center;
           color: #aaaaaa;
           margin-bottom: 30px;
         }
-        .container h2 span{
+        .container h2 span {
           color: #333;
           font-weight: bold;
         }
@@ -900,19 +1009,67 @@ export default function App() {
           color: #333;
           margin-bottom: 30px;
         }
-        
+
         .content {
           display: flex;
           flex-direction: column;
           gap: 20px;
         }
-        
-        .reference {
-          font-size: 18px;
-          font-weight: bold;
-          text-align: center;
-        }
-        
+
+    
+
+        .reference {  
+  display: flex;  
+  align-items: center;  
+  justify-content: center;  
+  gap: 1rem;  
+  margin: 1rem 0;  
+}  
+
+.nav-button {  
+  padding: 0.5rem 1rem;  
+  border: none;  
+  border-radius: 4px;  
+  background-color: #4a90e2;  
+  color: white;  
+  cursor: pointer;  
+  transition: background-color 0.2s;  
+}  
+
+.nav-button:hover {  
+  background-color: #357abd;  
+}  
+
+.nav-button:disabled {  
+  background-color: #cccccc;  
+  cursor: not-allowed;  
+}  
+
+.modal {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  background-color: rgba(0, 0, 0, 0.5);  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  z-index: 1000;  
+}  
+
+.modal-content {  
+  background-color: white;  
+  padding: 2rem;  
+  border-radius: 8px;  
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  
+  text-align: center;  
+}  
+
+.modal-content p {  
+  margin: 0;  
+  font-size: 1.2rem;  
+}  
         .verse {
           font-size: 18px;
           line-height: 1.6;
@@ -921,35 +1078,72 @@ export default function App() {
           border-radius: 8px;
           text-align: center;
         }
-        
-        .input {
+
+  
+
+        .input-container {
+          position: relative;
+          min-height: 120px;
+          padding: 16px;
+          border: 2px solid #e1e1e1;
+          border-radius: 8px;
+          font-size: 18px;
+          line-height: 1.6;
+          background: #fff;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+          transition: border-color 0.2s;
+          white-space: pre-wrap;
+          word-break: break-all;
+        }
+        .cursor {  
+   display: inline-block;  
+   width: 2px;  
+   height: 1.2em;  
+   background-color: #333;  
+   animation: blink 1s step-end infinite;  
+   vertical-align: middle;  
+   margin-left: -1px; /* 커서가 문자 사이에 정확히 위치하도록 조정 */  
+}  
+
+@keyframes blink {  
+   from, to {  
+     opacity : 1;
+   }  
+   50% {  
+     opacity : 0;
+   }  
+}  
+        .input-container:focus-within {
+          border-color: #4a90e2;
+          box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+
+        .input-container span {
+          display: inline;
+          padding: 0;
+          margin : 0;
+          letter-spacing: normal;
+          position : relative;
+        }
+
+        .correct {
+          color: #2ecc71;
+        }
+
+        .incorrect {
+          color: #e74c3c;
+          background: rgba(231, 76, 60, 0.1);
+          border-radius: 2px;
+        }
+              .hidden-input {
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
-          min-height: 100px;
-          padding: 15px;
-          border-radius: 8px;
-          border: 2px solid #ccc;
-          font-size: 16px;
-          resize: vertical;
-          font-family: 'Noto Sans KR', sans-serif;
-        }
-        
-        .input.correct {
-          border-color: #4CAF50;
-          background-color: #f0fff0;
-        }
-        
-        .input.incorrect {
-          border-color: #FF5252;
-          background-color: #fff0f0;
-        }
-        
-        .stats-container {
-          display: flex;
-          justify-content: space-around;
-          padding: 20px;
-          background-color: #f8f9fa;
-          border-radius: 8px;
-          font-weight: bold;
+          height: 100%;
+          opacity: 0;
+          z-index : 1;
+          resize : none;
         }
       `}</style>
     </div>
