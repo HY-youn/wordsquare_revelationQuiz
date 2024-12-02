@@ -3,7 +3,6 @@ import React from 'react';
 function MainMenu({ onLevelSelect }) {
   return (
     <div className="main-menu">
-      <div className="main-image"></div>
       <h1 className="main-title">계시록 천국 고시</h1>
       <h2 className="main-subtitle">12월 14일 모두 인 맞읍시다! </h2>
       <div className="button-container">
