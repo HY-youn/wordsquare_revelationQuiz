@@ -3,6 +3,7 @@ import React from 'react';
 function MainMenu({ onLevelSelect }) {
   return (
     <div className="main-menu">
+      <div className="main-image"></div>
       <h1 className="main-title">계시록 천국 고시</h1>
       <h2 className="main-subtitle">12월 14일 모두 인 맞읍시다! </h2>
       <div className="button-container">
@@ -12,6 +13,7 @@ function MainMenu({ onLevelSelect }) {
       </div>
 
       <style jsx>{`
+   
         .main-menu {
           display: flex;
           flex-direction: column;
@@ -20,7 +22,22 @@ function MainMenu({ onLevelSelect }) {
           min-height: 100vh;
           background-color: #f8f9fa;
         }
-
+     .main-image {
+    background-image: url('https://postfiles.pstatic.net/MjAyNDEyMDNfMjQx/MDAxNzMzMTY4NjQ0MDQx.OaVhZHAOTTUPuwCd0zh0EX9pU3mepVwL7esT3HYefgAg.lXtLVQ5GTnjRJ99syzv-FzNlRV8CKmenvcjgPT5vCUUg.JPEG/anointed.jpg?type=w966');  
+    background-size: contain;      /* 배경 이미지를 div 크기에 맞게 조정 */  
+    background-position: center;
+    background-repeat : no-repeat; /* 배경 이미지를 중앙에 위치 */  
+    width : 50%;
+    height: 500px;              /* 전체 화면 높이 */  
+    transition : all 0.3s ease-in-out;
+    overflow : hidden;
+          }
+          .main-image:hover {
+          scale : 1.05;
+        width : 60%;
+    height: 500px;              /* 전체 화면 높이 */  
+    opacity : 0.8;
+          }
         .main-title {
           font-size: 3rem;
           color: #333;
