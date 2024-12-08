@@ -9,6 +9,9 @@ function MainMenu({ onLevelSelect }) {
         <button onClick={() => onLevelSelect(1)}>1단계<br/>(1-7장)</button>
         <button onClick={() => onLevelSelect(2)}>2단계<br/>(1-14장)</button>
         <button onClick={() => onLevelSelect(3)}>3단계<br/>(1-22장)</button>
+        <button onClick={() => onLevelSelect('random-test')} className="random-test-btn">  
+          랜덤 모의고사  
+        </button> 
       </div>
 
       <style jsx>{`
@@ -47,7 +50,13 @@ function MainMenu({ onLevelSelect }) {
           padding : 20px 40px;
           border-radius: 25px;
         }
-
+          .menu-buttons {  
+          display: flex;  
+          flex-direction: column;  
+          gap: 15px;  
+          max-width: 300px;  
+          margin: 0 auto;  
+        }  
         .main-subtitle {
           font-size: 1.5rem;
           color: #aaaaaa;
@@ -90,5 +99,6 @@ function MainMenu({ onLevelSelect }) {
     </div>
   );
 }
+
 
 export default MainMenu;

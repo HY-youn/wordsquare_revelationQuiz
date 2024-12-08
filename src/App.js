@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import BibleSelector from "./components/BibleSelector";
 import MainMenu from "./components/MainMenu";
+import RandomTest from "./components/RandomTest";
 
 // 계시록 데이터
 const BIBLE_VERSES = {
@@ -893,6 +894,16 @@ const Modal = ({ message, show }) => {
   if (!selectedLevel) {
     return <MainMenu onLevelSelect={handleLevelSelect} />;
   }
+if (selectedLevel === 'random-test') {  
+  return (  
+    <div>  
+      <button className="back-button" onClick={() => setSelectedLevel(null)}>  
+        메인 메뉴로 돌아가기  
+      </button>  
+      <RandomTest BIBLE_VERSES={BIBLE_VERSES} />  
+    </div>  
+  );  
+}  
   return (
     <div className="container">
       <h1>계시록 타자 연습</h1>
