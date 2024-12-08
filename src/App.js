@@ -900,7 +900,8 @@ if (selectedLevel === 'random-test') {
       <button className="back-button" onClick={() => setSelectedLevel(null)}>  
         메인 메뉴로 돌아가기  
       </button>  
-      <RandomTest BIBLE_VERSES={BIBLE_VERSES} />  
+      <RandomTest 
+      BIBLE_VERSES={BIBLE_VERSES} />  
     </div>  
   );  
 }  

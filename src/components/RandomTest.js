@@ -1,23 +1,59 @@
 // RandomTest.jsx  
 import React, { useState, useEffect } from 'react';  
 
-function RandomTest({ BIBLE_VERSES }) {  
+function RandomTest({ BIBLE_VERSES, selectedLevel }) {  
   const [questions, setQuestions] = useState([]);  
   const [userAnswers, setUserAnswers] = useState({});  
   const [showResults, setShowResults] = useState(false);  
   const [score, setScore] = useState(0);  
+  const [currentLevel, setCurrentLevel] = useState(1);
+  const [customRange, setCustomRange] = useState(''); // 사용자 지정 범위  
+  const [isCustomRange, setIsCustomRange] = useState(false); // 사용자 지정 범위 사용 여부
 
-  useEffect(() => {  
-    generateQuestions();  
-  }, []);  
+  const getChapterRange = () => { 
+    if (isCustomRange && customRange) {  
+      const chapter = parseInt(customRange);  
+      return { min: chapter, max: chapter };  
+    }  
+    switch (currentLevel) {
+      case 1:  
+      return { min: 1, max: 7 };  
+    case 2:  
+      return { min: 1, max: 14 };  
+    case 3:  
+      return { min: 1, max: 22 };  
+    default:  
+      return { min: 1, max: 7 }; // 기본값은 레벨 1  
+    }
+  };
+  
+  const handleLevelChange = (e) => {  
+    setIsCustomRange(false); // 레벨 선택 시 사용자 지정 범위 해제 
+    setCurrentLevel(parseInt(e.target.value));  
+  };  
+
+  const handleCustomRangeChange = (e) => {  
+    const value = e.target.value;  
+    if (value === '' || (parseInt(value) >= 1 && parseInt(value) <= 22)) {  
+      setCustomRange(value);  
+    }  
+  };  
+
+  const applyCustomRange = () => {  
+    if (customRange && parseInt(customRange) >= 1 && parseInt(customRange) <= 22) {  
+      setIsCustomRange(true);  
+      generateQuestions();  
+    }  
+  };  
 
   const generateQuestions = () => {  
     const newQuestions = [];  
     const usedVerses = new Set();   
+    const { min, max } = getChapterRange();  
     // Set은 자바스크립트의 배열로 배열과는 다르게 중복값은 포함하지 않습니다. 1) 중복을 제거한다 2) 순서 유지 한다 3) 다양한 데이터 타입을 지원한다(문자열, 숫자, 객체 등의 값)
     while (newQuestions.length < 10) {  
       // 랜덤으로 장과 절 선택  
-      const chapter = Math.floor(Math.random() * 8) + 1; // 1-8장까지  
+      const chapter = Math.floor(Math.random() * (max - min + 1)) + min; // 1-8장까지  
       const verses = Object.keys(BIBLE_VERSES.revelation[chapter]);  
       const verse = verses[Math.floor(Math.random() * verses.length)];  
       
@@ -40,6 +76,15 @@ function RandomTest({ BIBLE_VERSES }) {
     setScore(0);  
   };  
 
+    // 컴포넌트 마운트 시 또는 레벨 변경 시 문제 생성  
+    useEffect(() => {  
+      if(!isCustomRange) {
+      generateQuestions();
+    }  
+    }, [currentLevel]);  
+  
+
+
   const handleAnswerSubmit = () => {  
     let correctCount = 0;  
     questions.forEach((q, index) => {  
@@ -54,10 +99,58 @@ function RandomTest({ BIBLE_VERSES }) {
 
   return (  
     <div className="random-test">  
-      <h2>랜덤 모의고사 (10문제)</h2>  
-      <button onClick={generateQuestions} className="new-test-btn">  
-        새로운 시험 생성  
-      </button>  
+    <h2>랜덤 모의고사 (10문제)</h2>  
+    
+    <div className="range-selection">  
+      <div className="preset-levels">  
+        <label>사전 설정 레벨:</label>  
+        <select   
+          value={currentLevel}  
+          onChange={handleLevelChange}  
+          // disabled={isCustomRange}  
+          className="level-select"  
+        >  
+          <option value={1}>레벨 1 (1-7장)</option>  
+          <option value={2}>레벨 2 (1-14장)</option>  
+          <option value={3}>레벨 3 (1-22장)</option>  
+        </select>  
+      </div>  
+
+      <div className="custom-range">  
+        <label>특정 장 선택:</label>  
+        <div className="custom-range-input">  
+          <input  
+            type="number"  
+            min="1"  
+            max="22"  
+            value={customRange}  
+            onChange={handleCustomRangeChange}  
+            placeholder="1-22 사이의 장 입력"  
+            className="chapter-input"  
+          />  
+          <button   
+            onClick={applyCustomRange}  
+            disabled={!customRange || parseInt(customRange) < 1 || parseInt(customRange) > 22}  
+            className="apply-btn"  
+          >  
+            적용  
+          </button>  
+        </div>  
+      </div>  
+    </div>  
+
+    <div className="level-info">  
+      {isCustomRange ? (  
+        <p>선택된 장: {customRange}장</p>  
+      ) : (  
+        <p>현재 레벨: {currentLevel} (범위: 1-{getChapterRange().max}장)</p>  
+      )}  
+    </div>  
+    
+    <button onClick={generateQuestions} className="new-test-btn">  
+      새로운 시험 생성  
+    </button>  
+
 
       <div className="questions-container">  
         {questions.map((q, index) => (  
@@ -84,7 +177,7 @@ function RandomTest({ BIBLE_VERSES }) {
         ))}  
       </div>  
 
-      {!showResults && (  
+      {!showResults && questions.length > 0 && (  
         <button onClick={handleAnswerSubmit} className="submit-btn">  
           채점하기  
         </button>  
@@ -98,12 +191,83 @@ function RandomTest({ BIBLE_VERSES }) {
       )}  
 
       <style jsx>{`  
+        .custom-range-input {  
+          display: flex;  
+          gap: 10px;  
+        }  
+
+        .chapter-input {  
+          padding: 8px;  
+          width: 150px;  
+          border: 1px solid #ddd;  
+          border-radius: 4px;  
+          font-size: 16px;  
+        }  
+        .level-select:disabled {  
+          background-color: #f0f0f0;  
+          cursor: not-allowed;  
+        }  
         .random-test {  
           padding: 20px;  
           max-width: 800px;  
           margin: 0 auto;  
         }  
+  
+        
+       .range-selection {  
+          margin: 20px 0;  
+          display: flex;  
+          flex-direction: column;  
+          gap: 15px;  
+          padding: 15px;  
+          background-color: #f5f5f5;  
+          border-radius: 8px;  
+        }  
 
+        .preset-levels, .custom-range {  
+          display: flex;  
+          flex-direction: column;  
+          gap: 8px;  
+        }  
+
+        .custom-range-input {  
+          display: flex;  
+          gap: 10px;  
+        }  
+
+        .chapter-input {  
+          padding: 8px;  
+          width: 150px;  
+          border: 1px solid #ddd;  
+          border-radius: 4px;  
+          font-size: 16px;  
+        }  
+
+        .apply-btn {  
+          padding: 8px 16px;  
+          background-color: #4caf50;  
+          color: white;  
+          border: none;  
+          border-radius: 4px;  
+          cursor: pointer;  
+        }  
+
+        .apply-btn:disabled {  
+          background-color: #cccccc;  
+          cursor: not-allowed;  
+        }  
+
+        .level-select {  
+          padding: 8px;  
+          font-size: 16px;  
+          border-radius: 4px;  
+          border: 1px solid #ddd;  
+        }  
+
+        .level-select:disabled {  
+          background-color: #f0f0f0;  
+          cursor: not-allowed;  
+        }  
         .new-test-btn, .submit-btn {  
           padding: 10px 20px;  
           background-color: #4caf50;  
