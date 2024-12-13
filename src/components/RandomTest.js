@@ -51,31 +51,39 @@ function RandomTest({ BIBLE_VERSES, selectedLevel }) {
     const usedVerses = new Set();   
     const { min, max } = getChapterRange();  
     // Set은 자바스크립트의 배열로 배열과는 다르게 중복값은 포함하지 않습니다. 1) 중복을 제거한다 2) 순서 유지 한다 3) 다양한 데이터 타입을 지원한다(문자열, 숫자, 객체 등의 값)
-    while (newQuestions.length < 10) {  
-      // 랜덤으로 장과 절 선택  
-      const chapter = Math.floor(Math.random() * (max - min + 1)) + min; // 1-8장까지  
-      const verses = Object.keys(BIBLE_VERSES.revelation[chapter]);  
-      const verse = verses[Math.floor(Math.random() * verses.length)];  
-      
-      const verseKey = `${chapter}-${verse}`;  
-      
-      // 중복 방지  
-      if (!usedVerses.has(verseKey)) {  
-        usedVerses.add(verseKey);
-        newQuestions.push({  
-          chapter,  
-          verse,  
-          text: BIBLE_VERSES.revelation[chapter][verse],  
-        });  
-      }  
+
+    const availableVerses = [];  
+    for (let chapter = min; chapter <= max; chapter++) {  
+      const verses = Object.keys(BIBLE_VERSES.revelation[chapter] || {}); // 각 chapter의 verses 가져오기  
+      verses.forEach((verse) => {  
+        availableVerses.push({ chapter, verse, text: BIBLE_VERSES.revelation[chapter][verse] });  
+      });  
     }  
+    // 가능한 문제 수를 availableVerses 의 길이와 10 중 작은 값으로 제한
+    const maxQuestions = Math.min(10, availableVerses.length);  
+
+     // 최대 10개의 문제 생성 (사용 가능한 verse가 부족하면 그만큼만 생성)  
+     while (newQuestions.length < maxQuestions && availableVerses.length > 0) {  
+      const randomIndex = Math.floor(Math.random() * availableVerses.length);  
+      const selectedQuestion = availableVerses[randomIndex];  
+  
+      // 중복 방지  
+      const verseKey = `${selectedQuestion.chapter}-${selectedQuestion.verse}`;  
+      if (!usedVerses.has(verseKey)) {  
+        usedVerses.add(verseKey);  
+        newQuestions.push(selectedQuestion);  
+      }  
+  
+      // 선택된 verse는 배열에서 제거  
+      availableVerses.splice(randomIndex, 1);  
+    }  
+       // 만약 모든 가능한 verse를 다 사용했는데도 10문제를 채우지 못한 경우 무한 루프 방지  
 
     setQuestions(newQuestions);  
     setUserAnswers({});  
     setShowResults(false);  
     setScore(0);  
-  };  
-
+  };
     // 컴포넌트 마운트 시 또는 레벨 변경 시 문제 생성  
     useEffect(() => {  
       if(!isCustomRange) {
